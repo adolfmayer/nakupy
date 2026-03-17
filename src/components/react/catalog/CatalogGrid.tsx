@@ -1,3 +1,4 @@
+import type { JSX } from "react";
 import type { CatalogItem } from "../../../domain/types";
 import { CatalogCard } from "./CatalogCard";
 

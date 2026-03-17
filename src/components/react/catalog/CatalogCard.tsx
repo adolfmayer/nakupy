@@ -1,5 +1,6 @@
 import { useDraggable } from '@dnd-kit/core';
 import type React from 'react';
+import type { JSX } from 'react';
 import type { CatalogItem } from '../../../domain/types';
 
 export interface CatalogCardProps {
