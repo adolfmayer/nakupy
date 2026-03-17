@@ -111,12 +111,12 @@ export function ShoppingListPanel({
 
   return (
     <aside className="sticky top-4 rounded-2xl bg-red-500/15 p-4 ring-1 ring-red-400/25">
-      <div className="flex items-baseline justify-between gap-3">
+      <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
         <div className="text-sm font-semibold tracking-wide text-red-100">
           Shopping List
         </div>
-        <div className="flex items-center gap-3">
-          <div className="text-xs text-red-200/80">{list.entries.length} items</div>
+        <div className="flex items-center gap-2 text-xs text-red-200/80">
+          <span>{list.entries.length} items</span>
           <HoldToConfirmButton
             disabled={list.entries.length === 0}
             holdMs={900}
