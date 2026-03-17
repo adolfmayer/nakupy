@@ -25,6 +25,7 @@ export function CatalogCard({ item }: CatalogCardProps): JSX.Element {
       className={[
         "group relative aspect-4/5 overflow-hidden rounded-2xl text-left ring-1 transition",
         "ring-orange-400/25 bg-orange-500/15 hover:bg-orange-500/20",
+        "touch-none select-none",
         isDragging ? "opacity-70" : "opacity-100"
       ].join(" ")}
       type="button"
