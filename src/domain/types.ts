@@ -1,8 +1,4 @@
-import type {
-  CatalogItemId,
-  ShoppingListEntryId,
-  ShoppingListId
-} from "./id";
+import type { CatalogItemId, ShoppingListEntryId, ShoppingListId } from './id';
 
 export interface CatalogItem {
   id: CatalogItemId;
@@ -31,4 +27,3 @@ export interface ShoppingListPersistedV1 {
   version: 1;
   list: ShoppingList;
 }
-
