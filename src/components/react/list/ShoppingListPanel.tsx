@@ -27,6 +27,13 @@ function HoldToConfirmButton({
 
   const clampedHoldMs = useMemo(() => Math.max(400, Math.floor(holdMs)), [holdMs]);
 
+  function start(): void {
+    if (disabled === true) return;
+    startAtMsRef.current = performance.now();
+    setHolding(true);
+    rafRef.current = window.requestAnimationFrame(tick);
+  }
+
   function stop(): void {
     setHolding(false);
     setProgress01(0);
@@ -66,16 +73,20 @@ function HoldToConfirmButton({
       aria-label="Hold to clear all items"
       onPointerDown={(e) => {
         if (disabled === true) return;
-        // Avoid triggering accidentally from non-primary buttons.
-        if (e.button !== 0) return;
+        // Avoid triggering accidentally from non-primary buttons on desktop.
+        if (e.pointerType === "mouse" && e.button !== 0) return;
         e.currentTarget.setPointerCapture(e.pointerId);
-        startAtMsRef.current = performance.now();
-        setHolding(true);
-        rafRef.current = window.requestAnimationFrame(tick);
+        start();
       }}
       onPointerUp={() => stop()}
       onPointerCancel={() => stop()}
       onPointerLeave={() => stop()}
+      onTouchStart={(e) => {
+        e.preventDefault();
+        start();
+      }}
+      onTouchEnd={() => stop()}
+      onTouchCancel={() => stop()}
       className={[
         "relative inline-flex items-center justify-center rounded-full px-3 py-1.5 text-xs font-semibold ring-1 transition",
         "select-none touch-none",
