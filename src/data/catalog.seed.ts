@@ -147,7 +147,7 @@ export const CATALOG_SEED: readonly CatalogItem[] = [
   {
     id: asCatalogItemId('olej'),
     title: 'Olej',
-    imageUrl: 'https://picsum.photos/seed/olej/400/500',
+    imageUrl: '/images/catalog/olej.jpg',
     tags: ['pantry'],
     createdAt: now,
   },
@@ -159,9 +159,9 @@ export const CATALOG_SEED: readonly CatalogItem[] = [
     createdAt: now,
   },
   {
-    id: asCatalogItemId('uzeniny'),
-    title: 'Uzeniny',
-    imageUrl: 'https://picsum.photos/seed/uzeniny/400/500',
+    id: asCatalogItemId('salam'),
+    title: 'Salám',
+    imageUrl: '/images/catalog/salam.jpg',
     tags: ['meat'],
     createdAt: now,
   },
@@ -182,7 +182,7 @@ export const CATALOG_SEED: readonly CatalogItem[] = [
   {
     id: asCatalogItemId('tortily'),
     title: 'Tortily',
-    imageUrl: 'https://picsum.photos/seed/tortily/400/500',
+    imageUrl: '/images/catalog/tortily.jpg',
     tags: ['bakery'],
     createdAt: now,
   },
