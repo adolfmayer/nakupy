@@ -5,58 +5,520 @@ const now = new Date().toISOString();
 
 export const CATALOG_SEED: readonly CatalogItem[] = [
   {
-    id: asCatalogItemId("milk"),
-    title: "Milk",
-    imageUrl: "https://picsum.photos/seed/milk/400/500",
-    tags: ["dairy"],
-    createdAt: now
-  },
-  {
-    id: asCatalogItemId("bread"),
-    title: "Bread",
-    imageUrl: "https://picsum.photos/seed/bread/400/500",
+    id: asCatalogItemId("pecivo"),
+    title: "Pečivo",
+    imageUrl: "https://picsum.photos/seed/pecivo/400/500",
     tags: ["bakery"],
     createdAt: now
   },
   {
-    id: asCatalogItemId("eggs"),
-    title: "Eggs",
-    imageUrl: "https://picsum.photos/seed/eggs/400/500",
+    id: asCatalogItemId("chleba"),
+    title: "Chleba",
+    imageUrl: "https://picsum.photos/seed/chleba/400/500",
+    tags: ["bakery"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("mleko"),
+    title: "Mléko",
+    imageUrl: "https://picsum.photos/seed/mleko/400/500",
     tags: ["dairy"],
     createdAt: now
   },
   {
-    id: asCatalogItemId("apples"),
-    title: "Apples",
-    imageUrl: "https://picsum.photos/seed/apples/400/500",
-    tags: ["fruit"],
+    id: asCatalogItemId("brambory"),
+    title: "Brambory",
+    imageUrl: "https://picsum.photos/seed/brambory/400/500",
+    tags: ["vegetable"],
     createdAt: now
   },
   {
-    id: asCatalogItemId("bananas"),
-    title: "Bananas",
-    imageUrl: "https://picsum.photos/seed/bananas/400/500",
-    tags: ["fruit"],
-    createdAt: now
-  },
-  {
-    id: asCatalogItemId("chicken"),
-    title: "Chicken",
-    imageUrl: "https://picsum.photos/seed/chicken/400/500",
+    id: asCatalogItemId("veprove-maso"),
+    title: "Vepřové maso",
+    imageUrl: "https://picsum.photos/seed/veprove-maso/400/500",
     tags: ["meat"],
     createdAt: now
   },
   {
-    id: asCatalogItemId("pasta"),
-    title: "Pasta",
-    imageUrl: "https://picsum.photos/seed/pasta/400/500",
+    id: asCatalogItemId("kureci-maso"),
+    title: "Kuřecí maso",
+    imageUrl: "https://picsum.photos/seed/kureci-maso/400/500",
+    tags: ["meat"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("vejce"),
+    title: "Vejce",
+    imageUrl: "https://picsum.photos/seed/vejce/400/500",
+    tags: ["dairy"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("maslo"),
+    title: "Máslo",
+    imageUrl: "https://picsum.photos/seed/maslo/400/500",
+    tags: ["dairy"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("cukr"),
+    title: "Cukr",
+    imageUrl: "https://picsum.photos/seed/cukr/400/500",
     tags: ["pantry"],
     createdAt: now
   },
   {
-    id: asCatalogItemId("tomatoes"),
-    title: "Tomatoes",
-    imageUrl: "https://picsum.photos/seed/tomatoes/400/500",
+    id: asCatalogItemId("hladka-mouka"),
+    title: "Hladká mouka",
+    imageUrl: "https://picsum.photos/seed/hladka-mouka/400/500",
+    tags: ["pantry"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("hruba-mouka"),
+    title: "Hrubá mouka",
+    imageUrl: "https://picsum.photos/seed/hruba-mouka/400/500",
+    tags: ["pantry"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("cibule"),
+    title: "Cibule",
+    imageUrl: "https://picsum.photos/seed/cibule/400/500",
+    tags: ["vegetable"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("pivo"),
+    title: "Pivo",
+    imageUrl: "https://picsum.photos/seed/pivo/400/500",
+    tags: ["drinks"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("jogurty-pro-deti"),
+    title: "Jogurty pro děti",
+    imageUrl: "https://picsum.photos/seed/jogurty-pro-deti/400/500",
+    tags: ["dairy"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("syry"),
+    title: "Sýry",
+    imageUrl: "https://picsum.photos/seed/syry/400/500",
+    tags: ["dairy"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("testoviny"),
+    title: "Těstoviny",
+    imageUrl: "https://picsum.photos/seed/testoviny/400/500",
+    tags: ["pantry"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("olej"),
+    title: "Olej",
+    imageUrl: "https://picsum.photos/seed/olej/400/500",
+    tags: ["pantry"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("uzeniny"),
+    title: "Uzeniny",
+    imageUrl: "https://picsum.photos/seed/uzeniny/400/500",
+    tags: ["meat"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("ryze"),
+    title: "Rýže",
+    imageUrl: "https://picsum.photos/seed/ryze/400/500",
+    tags: ["pantry"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("bily-jogurt"),
+    title: "Bílý jogurt",
+    imageUrl: "https://picsum.photos/seed/bily-jogurt/400/500",
+    tags: ["dairy"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("tortily"),
+    title: "Tortily",
+    imageUrl: "https://picsum.photos/seed/tortily/400/500",
+    tags: ["bakery"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("horcice"),
+    title: "Hořčice",
+    imageUrl: "https://picsum.photos/seed/horcice/400/500",
+    tags: ["condiment"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("kecup"),
+    title: "Kečup",
+    imageUrl: "https://picsum.photos/seed/kecup/400/500",
+    tags: ["condiment"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("pomazankove-maslo"),
+    title: "Pomazánkové máslo",
+    imageUrl: "https://picsum.photos/seed/pomazankove-maslo/400/500",
+    tags: ["dairy"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("losos"),
+    title: "Losos",
+    imageUrl: "https://picsum.photos/seed/losos/400/500",
+    tags: ["fish"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("jablka"),
+    title: "Jablka",
+    imageUrl: "https://picsum.photos/seed/jablka/400/500",
+    tags: ["fruit"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("banany"),
+    title: "Banány",
+    imageUrl: "https://picsum.photos/seed/banany/400/500",
+    tags: ["fruit"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("pomerance"),
+    title: "Pomeranče",
+    imageUrl: "https://picsum.photos/seed/pomerance/400/500",
+    tags: ["fruit"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("mandarinky"),
+    title: "Mandarinky",
+    imageUrl: "https://picsum.photos/seed/mandarinky/400/500",
+    tags: ["fruit"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("hroznove-vino"),
+    title: "Hroznové víno",
+    imageUrl: "https://picsum.photos/seed/hroznove-vino/400/500",
+    tags: ["fruit"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("citrony"),
+    title: "Citrony",
+    imageUrl: "https://picsum.photos/seed/citrony/400/500",
+    tags: ["fruit"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("broskve"),
+    title: "Broskve",
+    imageUrl: "https://picsum.photos/seed/broskve/400/500",
+    tags: ["fruit"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("nektarinky"),
+    title: "Nektarinky",
+    imageUrl: "https://picsum.photos/seed/nektarinky/400/500",
+    tags: ["fruit"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("hrusky"),
+    title: "Hrušky",
+    imageUrl: "https://picsum.photos/seed/hrusky/400/500",
+    tags: ["fruit"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("jahody"),
+    title: "Jahody",
+    imageUrl: "https://picsum.photos/seed/jahody/400/500",
+    tags: ["fruit"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("meloun-vodni"),
+    title: "Meloun vodní",
+    imageUrl: "https://picsum.photos/seed/meloun-vodni/400/500",
+    tags: ["fruit"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("meloun"),
+    title: "Meloun",
+    imageUrl: "https://picsum.photos/seed/meloun/400/500",
+    tags: ["fruit"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("kiwi"),
+    title: "Kiwi",
+    imageUrl: "https://picsum.photos/seed/kiwi/400/500",
+    tags: ["fruit"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("svestky"),
+    title: "Švestky",
+    imageUrl: "https://picsum.photos/seed/svestky/400/500",
+    tags: ["fruit"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("merunky"),
+    title: "Meruňky",
+    imageUrl: "https://picsum.photos/seed/merunky/400/500",
+    tags: ["fruit"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("boruvky"),
+    title: "Borůvky",
+    imageUrl: "https://picsum.photos/seed/boruvky/400/500",
+    tags: ["fruit"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("maliny"),
+    title: "Maliny",
+    imageUrl: "https://picsum.photos/seed/maliny/400/500",
+    tags: ["fruit"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("grapefruity"),
+    title: "Grapefruity",
+    imageUrl: "https://picsum.photos/seed/grapefruity/400/500",
+    tags: ["fruit"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("ananas"),
+    title: "Ananas",
+    imageUrl: "https://picsum.photos/seed/ananas/400/500",
+    tags: ["fruit"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("avokado"),
+    title: "Avokádo",
+    imageUrl: "https://picsum.photos/seed/avokado/400/500",
+    tags: ["fruit"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("mango"),
+    title: "Mango",
+    imageUrl: "https://picsum.photos/seed/mango/400/500",
+    tags: ["fruit"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("tresne"),
+    title: "Třešně",
+    imageUrl: "https://picsum.photos/seed/tresne/400/500",
+    tags: ["fruit"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("visne"),
+    title: "Višně",
+    imageUrl: "https://picsum.photos/seed/visne/400/500",
+    tags: ["fruit"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("rybiz"),
+    title: "Rybíz",
+    imageUrl: "https://picsum.photos/seed/rybiz/400/500",
+    tags: ["fruit"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("angrest"),
+    title: "Angrešt",
+    imageUrl: "https://picsum.photos/seed/angrest/400/500",
+    tags: ["fruit"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("mrkev"),
+    title: "Mrkev",
+    imageUrl: "https://picsum.photos/seed/mrkev/400/500",
+    tags: ["vegetable"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("rajcata"),
+    title: "Rajčata",
+    imageUrl: "https://picsum.photos/seed/rajcata/400/500",
+    tags: ["vegetable"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("okurky-hadovky"),
+    title: "Okurky hadovky",
+    imageUrl: "https://picsum.photos/seed/okurky-hadovky/400/500",
+    tags: ["vegetable"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("okurky-nakladacky"),
+    title: "Okurky nakládačky",
+    imageUrl: "https://picsum.photos/seed/okurky-nakladacky/400/500",
+    tags: ["vegetable"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("jalapenos"),
+    title: "Jalapenos",
+    imageUrl: "https://picsum.photos/seed/jalapenos/400/500",
+    tags: ["vegetable"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("papriky"),
+    title: "Papriky",
+    imageUrl: "https://picsum.photos/seed/papriky/400/500",
+    tags: ["vegetable"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("cesnek"),
+    title: "Česnek",
+    imageUrl: "https://picsum.photos/seed/cesnek/400/500",
+    tags: ["vegetable"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("kvetak"),
+    title: "Květák",
+    imageUrl: "https://picsum.photos/seed/kvetak/400/500",
+    tags: ["vegetable"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("zeli-hlavkove"),
+    title: "Zelí hlávkové",
+    imageUrl: "https://picsum.photos/seed/zeli-hlavkove/400/500",
+    tags: ["vegetable"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("pekingske-zeli"),
+    title: "Pekingské zelí",
+    imageUrl: "https://picsum.photos/seed/pekingske-zeli/400/500",
+    tags: ["vegetable"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("kedlubny"),
+    title: "Kedlubny",
+    imageUrl: "https://picsum.photos/seed/kedlubny/400/500",
+    tags: ["vegetable"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("cukety"),
+    title: "Cukety",
+    imageUrl: "https://picsum.photos/seed/cukety/400/500",
+    tags: ["vegetable"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("lilek"),
+    title: "Lilek",
+    imageUrl: "https://picsum.photos/seed/lilek/400/500",
+    tags: ["vegetable"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("brokolice"),
+    title: "Brokolice",
+    imageUrl: "https://picsum.photos/seed/brokolice/400/500",
+    tags: ["vegetable"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("celer"),
+    title: "Celer",
+    imageUrl: "https://picsum.photos/seed/celer/400/500",
+    tags: ["vegetable"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("petrlzel"),
+    title: "Petržel",
+    imageUrl: "https://picsum.photos/seed/petrlzel/400/500",
+    tags: ["vegetable"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("por"),
+    title: "Pór",
+    imageUrl: "https://picsum.photos/seed/por/400/500",
+    tags: ["vegetable"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("redkvicky"),
+    title: "Ředkvičky",
+    imageUrl: "https://picsum.photos/seed/redkvicky/400/500",
+    tags: ["vegetable"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("ledovy-salat"),
+    title: "Ledový salát",
+    imageUrl: "https://picsum.photos/seed/ledovy-salat/400/500",
+    tags: ["vegetable"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("spenat"),
+    title: "Špenát",
+    imageUrl: "https://picsum.photos/seed/spenat/400/500",
+    tags: ["vegetable"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("dyne"),
+    title: "Dýně",
+    imageUrl: "https://picsum.photos/seed/dyne/400/500",
+    tags: ["vegetable"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("fazolove-lusky"),
+    title: "Fazolové lusky",
+    imageUrl: "https://picsum.photos/seed/fazolove-lusky/400/500",
+    tags: ["vegetable"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("kukurice"),
+    title: "Kukuřice",
+    imageUrl: "https://picsum.photos/seed/kukurice/400/500",
+    tags: ["vegetable"],
+    createdAt: now
+  },
+  {
+    id: asCatalogItemId("hrasek"),
+    title: "Hrášek",
+    imageUrl: "https://picsum.photos/seed/hrasek/400/500",
     tags: ["vegetable"],
     createdAt: now
   }
