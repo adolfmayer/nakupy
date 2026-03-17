@@ -1,5 +1,5 @@
-import { useDraggable } from "@dnd-kit/core";
 import type { CatalogItem, ShoppingListEntry } from "../../../domain/types";
+import { removeEntry } from "../../../state/shoppingList.store";
 
 export interface ListRowProps {
   entry: ShoppingListEntry;
@@ -15,30 +15,15 @@ export function ListRow({ entry, catalogItem }: ListRowProps): JSX.Element {
   const pngImageSrc = baseImagePath != null ? `${baseImagePath}.png` : undefined;
   const jpgImageSrc = baseImagePath != null ? `${baseImagePath}.jpg` : undefined;
 
-  const { attributes, listeners, setNodeRef, transform, isDragging } =
-    useDraggable({
-      id: entryId,
-      data: { type: "shoppingListEntry" as const, entryId }
-    });
-
-  const style =
-    transform == null
-      ? undefined
-      : { transform: `translate3d(${transform.x}px, ${transform.y}px, 0)` };
-
   return (
     <button
-      ref={setNodeRef}
-      style={style}
       type="button"
       className={[
         "group relative aspect-4/5 overflow-hidden rounded-2xl text-left ring-1 transition",
         "ring-red-400/25 bg-zinc-950/60",
-        "touch-none select-none",
-        isDragging ? "opacity-70" : "opacity-100"
+        "select-none"
       ].join(" ")}
-      {...listeners}
-      {...attributes}
+      onClick={() => removeEntry(entryId)}
     >
       {pngImageSrc != null ? (
         <>

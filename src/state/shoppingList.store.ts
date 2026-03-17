@@ -55,6 +55,28 @@ export function addCatalogItemToList(catalogItemId: CatalogItemId): void {
   });
 }
 
+export function toggleCatalogItemInList(catalogItemId: CatalogItemId): void {
+  const current = $shoppingList.get();
+  const hasEntryForItem = current.entries.some(
+    (e) => e.catalogItemId === catalogItemId
+  );
+
+  if (!hasEntryForItem) {
+    addCatalogItemToList(catalogItemId);
+    return;
+  }
+
+  const updatedEntries = current.entries.filter(
+    (e) => e.catalogItemId !== catalogItemId
+  );
+
+  $shoppingList.set({
+    ...current,
+    entries: updatedEntries,
+    updatedAt: nowIso()
+  });
+}
+
 export function removeEntry(entryId: ShoppingListEntryId): void {
   const current = $shoppingList.get();
   const updatedEntries = current.entries.filter((e) => e.id !== entryId);

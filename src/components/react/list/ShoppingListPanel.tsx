@@ -1,4 +1,3 @@
-import { useDroppable } from "@dnd-kit/core";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { CatalogItem, ShoppingList } from "../../../domain/types";
 import type { CatalogItemId } from "../../../domain/id";
@@ -107,8 +106,6 @@ export function ShoppingListPanel({
   list,
   catalogById
 }: ShoppingListPanelProps): JSX.Element {
-  const { setNodeRef, isOver } = useDroppable({ id: "shoppingListDropzone" });
-
   return (
     <aside className="sticky top-4 rounded-2xl bg-red-500/15 p-4 ring-1 ring-red-400/25">
       <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
@@ -125,17 +122,11 @@ export function ShoppingListPanel({
         </div>
       </div>
 
-      <div
-        ref={setNodeRef}
-        className={[
-          "mt-3 min-h-[420px] rounded-xl p-3 ring-1 transition",
-          isOver ? "bg-red-500/15 ring-red-300/50" : "bg-red-500/10 ring-red-400/20"
-        ].join(" ")}
-      >
+      <div className="mt-3 min-h-[420px] rounded-xl bg-red-500/10 p-3 ring-1 ring-red-400/20">
         {list.entries.length === 0 ? (
           <div className="grid h-[380px] place-items-center text-center">
             <div className="max-w-[28ch] text-sm text-red-100/80">
-              Drag items here to build your list.
+              Click items in the catalog to build your shopping list.
             </div>
           </div>
         ) : (

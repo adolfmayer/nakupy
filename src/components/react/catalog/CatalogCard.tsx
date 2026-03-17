@@ -1,26 +1,20 @@
-import { useDraggable } from '@dnd-kit/core';
-import { useEffect, useState } from 'react';
-import type React from 'react';
-import type { JSX } from 'react';
-import type { CatalogItem } from '../../../domain/types';
+import { useEffect, useState } from "react";
+import type React from "react";
+import type { JSX } from "react";
+import type { CatalogItem } from "../../../domain/types";
 
 export interface CatalogCardProps {
   item: CatalogItem;
+  isSelected: boolean;
+  onClick: () => void;
 }
 
-export function CatalogCard({ item }: CatalogCardProps): JSX.Element {
+export function CatalogCard({
+  item,
+  isSelected,
+  onClick
+}: CatalogCardProps): JSX.Element {
   const [resolvedSrc, setResolvedSrc] = useState<string | undefined>(undefined);
-
-  const { attributes, listeners, setNodeRef, transform, isDragging } =
-    useDraggable({
-      id: item.id,
-      data: { type: 'catalogItem' as const, catalogItemId: item.id },
-    });
-
-  const style: React.CSSProperties | undefined =
-    transform == null
-      ? undefined
-      : { transform: `translate3d(${transform.x}px, ${transform.y}px, 0)` };
 
   const baseImagePath =
     item != null ? `/images/catalog/${item.id}` : undefined;
@@ -74,17 +68,15 @@ export function CatalogCard({ item }: CatalogCardProps): JSX.Element {
 
   return (
     <button
-      ref={setNodeRef}
-      style={style}
       className={[
-        'group relative aspect-4/5 overflow-hidden rounded-2xl text-left ring-1 transition',
-        'ring-orange-400/25 bg-orange-500/15 hover:bg-orange-500/20',
-        'touch-none select-none',
-        isDragging ? 'opacity-70' : 'opacity-100',
-      ].join(' ')}
+        "group relative aspect-4/5 overflow-hidden rounded-2xl text-left ring-1 transition",
+        isSelected
+          ? "ring-emerald-300 bg-emerald-500/25"
+          : "ring-orange-400/25 bg-orange-500/15 hover:bg-orange-500/20",
+        "select-none"
+      ].join(" ")}
       type="button"
-      {...listeners}
-      {...attributes}
+      onClick={onClick}
     >
       <div className="absolute inset-0">
         {resolvedSrc != null ? (
