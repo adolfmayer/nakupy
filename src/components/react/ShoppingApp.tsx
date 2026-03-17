@@ -25,6 +25,14 @@ import { SearchBar } from "./SearchBar";
 import { CatalogGrid } from "./catalog/CatalogGrid";
 import { ShoppingListPanel } from "./list/ShoppingListPanel";
 
+function normalizeForSearch(value: string): string {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim();
+}
+
 type CatalogDragData = Readonly<{
   type: "catalogItem";
   catalogItemId: CatalogItemId;
@@ -53,12 +61,12 @@ function filterCatalogItems(
   items: readonly CatalogItem[],
   query: string
 ): readonly CatalogItem[] {
-  const q = query.trim().toLowerCase();
+  const q = normalizeForSearch(query);
   if (q.length === 0) return items;
 
   return items.filter((item) => {
-    if (item.title.toLowerCase().includes(q)) return true;
-    return (item.tags ?? []).some((t) => t.toLowerCase().includes(q));
+    if (normalizeForSearch(item.title).includes(q)) return true;
+    return (item.tags ?? []).some((t) => normalizeForSearch(t).includes(q));
   });
 }
 
