@@ -15,7 +15,7 @@ export function ShoppingListPanel({
   const { setNodeRef, isOver } = useDroppable({ id: "shoppingListDropzone" });
 
   return (
-    <aside className="rounded-2xl bg-red-500/15 p-4 ring-1 ring-red-400/25">
+    <aside className="sticky top-4 rounded-2xl bg-red-500/15 p-4 ring-1 ring-red-400/25">
       <div className="flex items-baseline justify-between gap-3">
         <div className="text-sm font-semibold tracking-wide text-red-100">
           Shopping List
