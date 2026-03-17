@@ -1,5 +1,5 @@
 import { useDraggable } from "@dnd-kit/core";
-import type { CatalogItem, ShoppingListEntry } from "../../../domain.types";
+import type { CatalogItem, ShoppingListEntry } from "../../../domain/types";
 
 export interface ListRowProps {
   entry: ShoppingListEntry;
@@ -9,7 +9,9 @@ export interface ListRowProps {
 export function ListRow({ entry, catalogItem }: ListRowProps): JSX.Element {
   const entryId = entry.id;
   const title = catalogItem?.title ?? "Unknown item";
-  const imageUrl = catalogItem?.imageUrl;
+
+  const localImageSrc =
+    catalogItem != null ? `/images/catalog/${catalogItem.id}.png` : undefined;
 
   const { attributes, listeners, setNodeRef, transform, isDragging } =
     useDraggable({
@@ -36,15 +38,19 @@ export function ListRow({ entry, catalogItem }: ListRowProps): JSX.Element {
       {...listeners}
       {...attributes}
     >
-      {imageUrl != null ? (
+      {localImageSrc != null ? (
         <>
           <img
-            src={imageUrl}
+            src={localImageSrc}
             alt=""
             loading="lazy"
             className="h-full w-full object-cover opacity-85 transition group-hover:opacity-100"
             onError={(e) => {
-              e.currentTarget.style.display = "none";
+              if (catalogItem?.imageUrl && e.currentTarget.src.includes(localImageSrc)) {
+                e.currentTarget.src = catalogItem.imageUrl;
+              } else {
+                e.currentTarget.style.display = "none";
+              }
             }}
           />
           <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-zinc-950/80 via-zinc-950/25 to-transparent" />
