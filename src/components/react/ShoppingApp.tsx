@@ -88,7 +88,7 @@ export function ShoppingApp(): JSX.Element {
   return (
     <DndContext sensors={sensors} onDragEnd={onDragEnd}>
       <main className="mx-auto max-w-6xl px-4 py-6">
-        <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_380px]">
+        <div className="grid items-start gap-4 grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
           <section className="rounded-2xl bg-emerald-500/10 p-4 ring-1 ring-emerald-400/20">
             <div className="mb-3 text-xs font-semibold tracking-wide text-emerald-100/90">
               Catalog
