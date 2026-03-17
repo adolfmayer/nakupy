@@ -63,9 +63,7 @@ export function ShoppingApp(): JSX.Element {
     return () => window.clearTimeout(t);
   }, [list]);
 
-  const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 8 } })
-  );
+  const sensors = useSensors(useSensor(PointerSensor));
 
   const filtered = useMemo(
     () => filterCatalogItems(items, query),
