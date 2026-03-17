@@ -8,12 +8,13 @@ import {
 import { useStore } from "@nanostores/react";
 import { useEffect, useMemo } from "react";
 import type { CatalogItem } from "../../domain/types";
-import type { CatalogItemId } from "../../domain/id";
+import type { CatalogItemId, ShoppingListEntryId } from "../../domain/id";
 import { $catalogItems } from "../../state/catalog.store";
 import { $searchQuery } from "../../state/ui.store";
 import {
   addCatalogItemToList,
   initShoppingList,
+  removeEntry,
   $shoppingList
 } from "../../state/shoppingList.store";
 import {
@@ -29,10 +30,23 @@ type CatalogDragData = Readonly<{
   catalogItemId: CatalogItemId;
 }>;
 
+type ShoppingListEntryDragData = Readonly<{
+  type: "shoppingListEntry";
+  entryId: ShoppingListEntryId;
+}>;
+
 function isCatalogDragData(value: unknown): value is CatalogDragData {
   if (value == null || typeof value !== "object") return false;
   const v = value as Record<string, unknown>;
   return v["type"] === "catalogItem" && typeof v["catalogItemId"] === "string";
+}
+
+function isShoppingListEntryDragData(
+  value: unknown
+): value is ShoppingListEntryDragData {
+  if (value == null || typeof value !== "object") return false;
+  const v = value as Record<string, unknown>;
+  return v["type"] === "shoppingListEntry" && typeof v["entryId"] === "string";
 }
 
 function filterCatalogItems(
@@ -77,10 +91,19 @@ export function ShoppingApp(): JSX.Element {
   }, [items]);
 
   function onDragEnd(event: DragEndEvent): void {
-    if (event.over?.id !== "shoppingListDropzone") return;
     const data = event.active.data.current;
-    if (!isCatalogDragData(data)) return;
-    addCatalogItemToList(data.catalogItemId);
+
+    if (isCatalogDragData(data) && event.over?.id === "shoppingListDropzone") {
+      addCatalogItemToList(data.catalogItemId);
+      return;
+    }
+
+    if (
+      isShoppingListEntryDragData(data) &&
+      event.over?.id !== "shoppingListDropzone"
+    ) {
+      removeEntry(data.entryId);
+    }
   }
 
   return (

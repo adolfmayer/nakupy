@@ -1,9 +1,5 @@
-import type { CatalogItem, ShoppingListEntry } from "../../../domain/types";
-import {
-  removeEntry,
-  setEntryQuantity,
-  toggleEntryChecked
-} from "../../../state/shoppingList.store";
+import { useDraggable } from "@dnd-kit/core";
+import type { CatalogItem, ShoppingListEntry } from "../../../domain.types";
 
 export interface ListRowProps {
   entry: ShoppingListEntry;
@@ -15,8 +11,31 @@ export function ListRow({ entry, catalogItem }: ListRowProps): JSX.Element {
   const title = catalogItem?.title ?? "Unknown item";
   const imageUrl = catalogItem?.imageUrl;
 
+  const { attributes, listeners, setNodeRef, transform, isDragging } =
+    useDraggable({
+      id: entryId,
+      data: { type: "shoppingListEntry" as const, entryId }
+    });
+
+  const style =
+    transform == null
+      ? undefined
+      : { transform: `translate3d(${transform.x}px, ${transform.y}px, 0)` };
+
   return (
-    <div className="group relative aspect-4/5 overflow-hidden rounded-2xl bg-zinc-950/60 text-left ring-1 ring-red-400/25">
+    <button
+      ref={setNodeRef}
+      style={style}
+      type="button"
+      className={[
+        "group relative aspect-4/5 overflow-hidden rounded-2xl text-left ring-1 transition",
+        "ring-red-400/25 bg-zinc-950/60",
+        "touch-none select-none",
+        isDragging ? "opacity-70" : "opacity-100"
+      ].join(" ")}
+      {...listeners}
+      {...attributes}
+    >
       {imageUrl != null ? (
         <>
           <img
@@ -39,41 +58,7 @@ export function ListRow({ entry, catalogItem }: ListRowProps): JSX.Element {
           {title}
         </div>
       </div>
-
-      <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 p-2">
-        <label className="flex items-center gap-1 text-[11px] font-medium text-zinc-50">
-          <input
-            type="checkbox"
-            checked={entry.checked}
-            onChange={() => toggleEntryChecked(entryId)}
-            className="h-3.5 w-3.5 accent-red-400"
-            aria-label={`Mark ${title} as bought`}
-          />
-          <span className="opacity-90">Got it</span>
-        </label>
-
-        <div className="flex items-center gap-1">
-          <input
-            type="number"
-            min={1}
-            value={entry.quantity}
-            onChange={(e) =>
-              setEntryQuantity(entryId, Number(e.currentTarget.value))
-            }
-            className="h-7 w-12 rounded-lg bg-zinc-950/90 px-1.5 text-[11px] ring-1 ring-zinc-800 outline-none"
-            aria-label={`Quantity for ${title}`}
-          />
-          <button
-            type="button"
-            onClick={() => removeEntry(entryId)}
-            className="flex h-7 w-7 items-center justify-center rounded-full bg-red-500/80 text-[11px] font-bold text-zinc-50 shadow-sm ring-1 ring-red-300/80 hover:bg-red-400"
-            aria-label={`Remove ${title} from list`}
-          >
-            ×
-          </button>
-        </div>
-      </div>
-    </div>
+    </button>
   );
 }
 
