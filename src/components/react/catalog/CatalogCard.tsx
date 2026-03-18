@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
-import type React from "react";
 import type { JSX } from "react";
 import type { CatalogItem } from "../../../domain/types";
+import { getCatalogImageById } from "../../../assets/catalog/catalogImages";
 
 export interface CatalogCardProps {
   item: CatalogItem;
@@ -14,57 +13,8 @@ export function CatalogCard({
   isSelected,
   onClick
 }: CatalogCardProps): JSX.Element {
-  const [resolvedSrc, setResolvedSrc] = useState<string | undefined>(undefined);
-
-  const baseImagePath =
-    item != null ? `/images/catalog/${item.id}` : undefined;
-  const pngImageSrc =
-    baseImagePath != null ? `${baseImagePath}.png` : undefined;
-  const jpgImageSrc =
-    baseImagePath != null ? `${baseImagePath}.jpg` : undefined;
-
-  useEffect(() => {
-    let cancelled = false;
-
-    const resolveImage = async (): Promise<void> => {
-      const tryUrl = async (
-        url: string | undefined,
-      ): Promise<string | undefined> => {
-        if (url == null) return undefined;
-
-        try {
-          const response = await fetch(url, { method: 'HEAD' });
-          if (response.ok) return url;
-        } catch {
-          // ignore and fall through to next candidate
-        }
-
-        return undefined;
-      };
-
-      const fromPng = await tryUrl(pngImageSrc);
-      if (!cancelled && fromPng != null) {
-        setResolvedSrc(fromPng);
-        return;
-      }
-
-      const fromJpg = await tryUrl(jpgImageSrc);
-      if (!cancelled && fromJpg != null) {
-        setResolvedSrc(fromJpg);
-        return;
-      }
-
-      if (!cancelled) {
-        setResolvedSrc(item.imageUrl);
-      }
-    };
-
-    void resolveImage();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [item.imageUrl, jpgImageSrc, pngImageSrc]);
+  const imageMeta = getCatalogImageById(item.id);
+  const alt = `Photo of ${item.title}`;
 
   return (
     <button
@@ -79,16 +29,15 @@ export function CatalogCard({
       onClick={onClick}
     >
       <div className="absolute inset-0">
-        {resolvedSrc != null ? (
+        {imageMeta != null ? (
           <>
             <img
-              src={resolvedSrc}
-              alt=""
+              src={imageMeta.src}
+              width={imageMeta.width}
+              height={imageMeta.height}
+              alt={alt}
               loading="lazy"
               className="h-full w-full object-cover opacity-90 transition group-hover:opacity-100"
-              onError={(e) => {
-                e.currentTarget.style.display = 'none';
-              }}
             />
             <div className="absolute inset-0 bg-linear-to-t from-zinc-950/70 via-zinc-950/15 to-transparent" />
           </>
