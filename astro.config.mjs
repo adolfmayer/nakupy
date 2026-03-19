@@ -13,10 +13,5 @@ export default defineConfig({
     server: {
       allowedHosts: ['unreceipted-kennith-pointedly.ngrok-free.dev'],
     },
-  },
-  image: {
-    service: {
-      entrypoint: 'astro/assets/services/noop'
-    }
   }
 });
