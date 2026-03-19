@@ -1,4 +1,3 @@
-import { z } from "zod";
 import {
   asCatalogItemId,
   asShoppingListEntryId,
@@ -8,41 +7,73 @@ import type { ShoppingList, ShoppingListPersistedV1 } from "../../domain/types";
 
 const STORAGE_KEY = "nakupy.shoppingList";
 
-const shoppingListPersistedV1Schema = z
-  .object({
-    version: z.literal(1),
-    list: z.object({
-      id: z.string(),
-      name: z.string(),
-      updatedAt: z.string(),
-      entries: z.array(
-        z.object({
-          id: z.string(),
-          catalogItemId: z.string(),
-          quantity: z.number().int().min(1),
-          checked: z.boolean(),
-          addedAt: z.string()
-        })
-      )
-    })
-  })
-  .transform((payload) => {
-    const list: ShoppingList = {
-      id: asShoppingListId(payload.list.id),
-      name: payload.list.name,
-      updatedAt: payload.list.updatedAt,
-      entries: payload.list.entries.map((e) => ({
-        id: asShoppingListEntryId(e.id),
-        catalogItemId: asCatalogItemId(e.catalogItemId),
-        quantity: e.quantity,
-        checked: e.checked,
-        addedAt: e.addedAt
-      }))
-    };
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value != null && !Array.isArray(value);
+}
 
-    const persisted: ShoppingListPersistedV1 = { version: 1, list };
-    return persisted;
-  });
+function isString(value: unknown): value is string {
+  return typeof value === "string";
+}
+
+function isBoolean(value: unknown): value is boolean {
+  return typeof value === "boolean";
+}
+
+function isIntMin1(value: unknown): value is number {
+  return typeof value === "number" && Number.isInteger(value) && value >= 1;
+}
+
+function parseShoppingListPersistedV1(payload: unknown): ShoppingList | null {
+  if (!isRecord(payload)) return null;
+
+  if (payload.version !== 1) return null;
+  const listValue = payload.list;
+  if (!isRecord(listValue)) return null;
+
+  const idValue = listValue.id;
+  const nameValue = listValue.name;
+  const updatedAtValue = listValue.updatedAt;
+  const entriesValue = listValue.entries;
+
+  if (!isString(idValue) || !isString(nameValue) || !isString(updatedAtValue)) return null;
+  if (!Array.isArray(entriesValue)) return null;
+
+  const entries: ShoppingListPersistedV1["list"]["entries"] = [];
+  for (const entryValue of entriesValue) {
+    if (!isRecord(entryValue)) return null;
+
+    const entryId = entryValue.id;
+    const catalogItemId = entryValue.catalogItemId;
+    const quantity = entryValue.quantity;
+    const checked = entryValue.checked;
+    const addedAt = entryValue.addedAt;
+
+    if (
+      !isString(entryId) ||
+      !isString(catalogItemId) ||
+      !isIntMin1(quantity) ||
+      !isBoolean(checked) ||
+      !isString(addedAt)
+    ) {
+      return null;
+    }
+
+    entries.push({
+      id: asShoppingListEntryId(entryId),
+      catalogItemId: asCatalogItemId(catalogItemId),
+      quantity,
+      checked,
+      addedAt,
+    });
+  }
+
+  return {
+    id: asShoppingListId(idValue),
+    name: nameValue,
+    updatedAt: updatedAtValue,
+    entries,
+  };
+}
 
 function isBrowser(): boolean {
   return typeof window !== "undefined" && typeof window.localStorage !== "undefined";
@@ -56,10 +87,7 @@ export function loadShoppingList(): ShoppingList | null {
     if (raw == null) return null;
 
     const json: unknown = JSON.parse(raw);
-    const parsed = shoppingListPersistedV1Schema.safeParse(json);
-    if (!parsed.success) return null;
-
-    return parsed.data.list;
+    return parseShoppingListPersistedV1(json);
   } catch {
     return null;
   }

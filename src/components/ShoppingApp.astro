@@ -4,7 +4,6 @@ import type { ImageMetadata } from "astro";
 import type { CatalogItem } from "../domain/types";
 import { CATALOG_SEED } from "../data/catalog.seed";
 import { getCatalogImageById } from "../assets/catalog/catalogImages";
-import clientScriptUrl from "./shopping-app/client.selfcontained.js?url";
 
 const items = CATALOG_SEED satisfies readonly CatalogItem[];
 
@@ -164,6 +163,8 @@ const renderItems: readonly CatalogRenderItem[] = await Promise.all(
     </aside>
   </div>
 
-  <script type="module" src={clientScriptUrl}></script>
+  <script>
+    import "./shopping-app/client.ts";
+  </script>
 </main>
 

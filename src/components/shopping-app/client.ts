@@ -1,4 +1,3 @@
-import { $catalogItems } from "../../state/catalog.store";
 import { $searchQuery, setSearchQuery } from "../../state/ui.store";
 import {
   $shoppingList,
@@ -8,7 +7,6 @@ import {
   toggleCatalogItemInList,
 } from "../../state/shoppingList.store";
 import { loadShoppingList, saveShoppingList } from "../../adapters/storage/shoppingListStorage";
-import type { CatalogItem } from "../../domain/types";
 import type { CatalogItemId } from "../../domain/id";
 
 function normalizeForSearch(value: string): string {
@@ -19,12 +17,10 @@ function normalizeForSearch(value: string): string {
     .trim();
 }
 
-function matchesQuery(item: CatalogItem, query: string): boolean {
-  const q = normalizeForSearch(query);
-  if (q.length === 0) return true;
-  if (normalizeForSearch(item.title).includes(q)) return true;
-  return (item.tags ?? []).some((t) => normalizeForSearch(t).includes(q));
-}
+type CatalogSearchData = Readonly<{
+  titleNorm: string;
+  tagsNorm: readonly string[];
+}>;
 
 function getRequiredEl<T extends HTMLElement>(id: string): T {
   const el = document.getElementById(id);
@@ -71,9 +67,21 @@ export function initShoppingApp(): void {
     document.querySelectorAll<HTMLButtonElement>("[data-catalog-item][data-item-id]"),
   );
   const catalogButtonById = new Map<CatalogItemId, HTMLButtonElement>();
+  const catalogSearchById = new Map<CatalogItemId, CatalogSearchData>();
   for (const btn of catalogButtons) {
     const id = btn.dataset.itemId as CatalogItemId | undefined;
-    if (id != null) catalogButtonById.set(id, btn);
+    if (id == null) continue;
+    catalogButtonById.set(id, btn);
+
+    // Build a minimal, pre-normalized search index to avoid bundling catalog data.
+    const titleRaw = btn.dataset.itemTitle ?? "";
+    const tagsRaw = btn.dataset.itemTags ?? "";
+    const tags = tagsRaw.length === 0 ? [] : tagsRaw.split(" ").map((t) => t.trim()).filter((t) => t.length > 0);
+
+    catalogSearchById.set(id, {
+      titleNorm: normalizeForSearch(titleRaw),
+      tagsNorm: tags.map((t) => normalizeForSearch(t)),
+    });
   }
 
   // Restore persisted list (same behavior as previous React app).
@@ -179,8 +187,8 @@ export function initShoppingApp(): void {
 
   // UI updates: selection + list visibility + counts + order.
   function renderFromState(): void {
-    const items = $catalogItems.get();
     const query = $searchQuery.get();
+    const q = normalizeForSearch(query);
     const list = $shoppingList.get();
 
     const selected = new Set(list.entries.map((e) => e.catalogItemId));
@@ -189,10 +197,12 @@ export function initShoppingApp(): void {
     for (const btn of catalogButtons) {
       const id = btn.dataset.itemId as CatalogItemId | undefined;
       if (id == null) continue;
-      const item = items.find((x) => x.id === id);
-      if (item == null) continue;
 
-      const visible = matchesQuery(item, query);
+      const searchData = catalogSearchById.get(id);
+      if (searchData == null) continue;
+
+      const visible =
+        q.length === 0 || searchData.titleNorm.includes(q) || searchData.tagsNorm.some((t) => t.includes(q));
       btn.style.display = visible ? "" : "none";
       setCatalogCardSelected(btn, selected.has(id));
     }
