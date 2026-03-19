@@ -1,26 +1,22 @@
-import { useStore } from '@nanostores/react';
-import { useEffect, useMemo } from 'react';
-import type { CatalogItem } from '../../domain/types';
-import type { CatalogItemId, ShoppingListEntryId } from '../../domain/id';
-import { $catalogItems } from '../../state/catalog.store';
-import { $searchQuery } from '../../state/ui.store';
-import {
-  initShoppingList,
-  $shoppingList,
-  toggleCatalogItemInList,
-} from '../../state/shoppingList.store';
+import { useStore } from "@nanostores/react";
+import { useEffect, useMemo } from "react";
+import type { CatalogItem } from "../../domain/types";
+import type { CatalogItemId, ShoppingListEntryId } from "../../domain/id";
+import { $catalogItems } from "../../state/catalog.store";
+import { $searchQuery } from "../../state/ui.store";
+import { initShoppingList, $shoppingList, toggleCatalogItemInList } from "../../state/shoppingList.store";
 import {
   loadShoppingList,
-  saveShoppingList,
-} from '../../adapters/storage/shoppingListStorage';
-import { SearchBar } from './SearchBar';
-import { CatalogGrid } from './catalog/CatalogGrid';
-import { ShoppingListPanel } from './list/ShoppingListPanel';
+  saveShoppingList
+} from "../../adapters/storage/shoppingListStorage";
+import { SearchBar } from "./SearchBar";
+import { CatalogGrid } from "./catalog/CatalogGrid";
+import { ShoppingListPanel } from "./list/ShoppingListPanel";
 
 function normalizeForSearch(value: string): string {
   return value
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
     .trim();
 }
@@ -94,3 +90,4 @@ export function ShoppingApp(): JSX.Element {
     </main>
   );
 }
+

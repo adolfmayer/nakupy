@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import type { CatalogItem, ShoppingList } from '../../../domain/types';
-import type { CatalogItemId } from '../../../domain/id';
-import { ListRow } from './ListRow';
-import { clearShoppingList } from '../../../state/shoppingList.store';
+import { useState } from "react";
+import type { CatalogItem, ShoppingList } from "../../../domain/types";
+import type { CatalogItemId } from "../../../domain/id";
+import { ListRow } from "./ListRow";
+import { clearShoppingList } from "../../../state/shoppingList.store";
 
 export interface ShoppingListPanelProps {
   list: ShoppingList;
@@ -14,10 +14,7 @@ type ClearAllButtonProps = Readonly<{
   onClick: () => void;
 }>;
 
-function ClearAllButton({
-  disabled,
-  onClick,
-}: ClearAllButtonProps): JSX.Element {
+function ClearAllButton({ disabled, onClick }: ClearAllButtonProps): JSX.Element {
   const [pressed, setPressed] = useState(false);
 
   return (
@@ -35,14 +32,14 @@ function ClearAllButton({
       onPointerCancel={() => setPressed(false)}
       onPointerLeave={() => setPressed(false)}
       className={[
-        'relative inline-flex items-center justify-center rounded-full px-3 py-1.5 text-xs font-semibold ring-1 transition',
-        'select-none',
+        "relative inline-flex items-center justify-center rounded-full px-3 py-1.5 text-xs font-semibold ring-1 transition",
+        "select-none",
         disabled === true
-          ? 'cursor-not-allowed opacity-50 ring-red-400/20 bg-red-500/10 text-red-100/70'
+          ? "cursor-not-allowed opacity-50 ring-red-400/20 bg-red-500/10 text-red-100/70"
           : pressed
-            ? 'ring-red-200/60 bg-red-500/25 text-red-50'
-            : 'ring-red-300/35 bg-red-500/15 text-red-50 hover:bg-red-500/20',
-      ].join(' ')}
+            ? "ring-red-200/60 bg-red-500/25 text-red-50"
+            : "ring-red-300/35 bg-red-500/15 text-red-50 hover:bg-red-500/20"
+      ].join(" ")}
     >
       Clear all
     </button>
@@ -51,7 +48,7 @@ function ClearAllButton({
 
 export function ShoppingListPanel({
   list,
-  catalogById,
+  catalogById
 }: ShoppingListPanelProps): JSX.Element {
   return (
     <aside className="sticky top-4 rounded-2xl bg-red-500/15 p-4 ring-1 ring-red-400/25">
@@ -68,27 +65,26 @@ export function ShoppingListPanel({
         </div>
       </div>
 
-      <div className="mt-3 rounded-xl bg-red-500/10 ring-1 ring-red-400/20 overflow-hidden">
-        <div className="min-h-[420px] max-h-[calc(100dvh-8rem)] overflow-y-auto p-3">
-          {list.entries.length === 0 ? (
-            <div className="grid h-[380px] place-items-center text-center">
-              <div className="max-w-[28ch] text-sm text-red-100/80">
-                Click items in the catalog to build your shopping list.
-              </div>
+      <div className="mt-3 min-h-[420px] rounded-xl bg-red-500/10 p-3 ring-1 ring-red-400/20">
+        {list.entries.length === 0 ? (
+          <div className="grid h-[380px] place-items-center text-center">
+            <div className="max-w-[28ch] text-sm text-red-100/80">
+              Click items in the catalog to build your shopping list.
             </div>
-          ) : (
-            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
-              {list.entries.map((entry) => (
-                <ListRow
-                  key={entry.id}
-                  entry={entry}
-                  catalogItem={catalogById.get(entry.catalogItemId)}
-                />
-              ))}
-            </div>
-          )}
-        </div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
+            {list.entries.map((entry) => (
+              <ListRow
+                key={entry.id}
+                entry={entry}
+                catalogItem={catalogById.get(entry.catalogItemId)}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </aside>
   );
 }
+
